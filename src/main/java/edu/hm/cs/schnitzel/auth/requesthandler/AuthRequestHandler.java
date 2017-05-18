@@ -44,6 +44,10 @@ public class AuthRequestHandler {
     @Path("/token")
     public Response validateToken() {
         
+        
+        
+     
+        
     }
     @POST
     @Path("")
