@@ -7,10 +7,8 @@
  */
 package edu.hm.cs.schnitzel.auth.daos;
 
+import edu.hm.cs.schnitzel.auth.entities.Book;
 import java.util.List;
-
-import edu.hm.cs.schnitzel.entities.Book;
-import edu.hm.cs.schnitzel.entities.Disc;
 
 /**
  *
