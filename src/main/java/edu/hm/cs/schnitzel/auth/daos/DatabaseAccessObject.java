@@ -7,7 +7,7 @@
  */
 package edu.hm.cs.schnitzel.auth.daos;
 
-import edu.hm.cs.schnitzel.auth.entities.Book;
+import edu.hm.cs.schnitzel.auth.entities.User;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ public interface DatabaseAccessObject {
      * @param toAdd is the book to be added
      * @return true, if the process was successful.
      */
-    boolean addBook(final Book toAdd);
+    boolean addBook(final User toAdd);
 
     /**
      * Add a disc.
@@ -43,7 +43,7 @@ public interface DatabaseAccessObject {
      *
      * @return all books
      */
-    List<Book> getBooks();
+    List<User> getBooks();
 
     /**
      * Get all discs.
@@ -62,7 +62,7 @@ public interface DatabaseAccessObject {
      * @param isbn is the isbn number of the wanted book
      * @return the wanted book
      */
-    Book getBook(final String isbn);
+    User getBook(final String isbn);
 
     /**
      * Get a disc.
@@ -83,7 +83,7 @@ public interface DatabaseAccessObject {
      * @param toUpdate is the updated book
      * @return true, if the process was successful.
      */
-    boolean updateBook(final Book toUpdate);
+    boolean updateBook(final User toUpdate);
 
     /**
      * Update a disc.

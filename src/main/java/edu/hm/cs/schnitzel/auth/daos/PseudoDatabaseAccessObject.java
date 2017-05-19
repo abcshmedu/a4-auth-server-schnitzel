@@ -8,7 +8,7 @@
 package edu.hm.cs.schnitzel.auth.daos;
 
 import edu.hm.cs.schnitzel.auth.database.PseudoDatabase;
-import edu.hm.cs.schnitzel.auth.entities.Book;
+import edu.hm.cs.schnitzel.auth.entities.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
     //Constant Variables
     //--------------------------------------------------------------------------
     private static final PseudoDatabase DATABASE
-            = new PseudoDatabase(new HashSet<Book>(), new HashSet<>());
+            = new PseudoDatabase(new HashSet<User>(), new HashSet<>());
 
     //Methods Public Static
     //--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
     //Methods Public
     //--------------------------------------------------------------------------
     @Override
-    public final boolean addBook(final Book toAdd) {
+    public final boolean addBook(final User toAdd) {
         return DATABASE.getBooks().add(toAdd);
     }
 
@@ -75,8 +75,8 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
     }
 
     @Override
-    public final List<Book> getBooks() {
-        final List<Book> result = new ArrayList<>();
+    public final List<User> getBooks() {
+        final List<User> result = new ArrayList<>();
         result.addAll(DATABASE.getBooks());
         return result;
     }
@@ -89,7 +89,7 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
     }
 
     @Override
-    public final boolean updateBook(final Book toUpdate) {
+    public final boolean updateBook(final User toUpdate) {
         final boolean removed = removeBook(toUpdate.getIsbn());
         final boolean added = addBook(toUpdate);
         return removed && added;
@@ -103,9 +103,9 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
     }
 
     @Override
-    public final Book getBook(final String isbn) {
-        Book result = null;
-        for (final Book book : DATABASE.getBooks()) {
+    public final User getBook(final String isbn) {
+        User result = null;
+        for (final User book : DATABASE.getBooks()) {
             if (book.getIsbn().equals(isbn)) {
                 result = book;
             }

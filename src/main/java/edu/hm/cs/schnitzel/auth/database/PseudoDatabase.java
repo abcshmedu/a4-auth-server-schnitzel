@@ -21,7 +21,7 @@ public class PseudoDatabase {
 
     // Object Variables
     // -------------------------------------------------------------------------
-    private final Set<Book> books;
+    private final Set<User> books;
     private final Set<Disc> discs;
 
     // Constructors
@@ -33,13 +33,13 @@ public class PseudoDatabase {
         books = new HashSet<>();
         discs = new HashSet<>();
 
-        books.add(new Book("Tolkien", "12345-321",
+        books.add(new User("Tolkien", "12345-321",
                 2, "The Lord of the Rings 1"));
-        books.add(new Book("Tolkien", "12345-322",
+        books.add(new User("Tolkien", "12345-322",
                 1, "The Lord of the Rings 2"));
-        books.add(new Book("Tolkien", "12345-323",
+        books.add(new User("Tolkien", "12345-323",
                 1, "The Lord of the Rings 3"));
-        books.add(new Book("Rowling", "99999-123",
+        books.add(new User("Rowling", "99999-123",
                 0, "Harry Potter"));
 
         discs.add(new Disc("9123-1234", 0, 2, "nicfel", "flip", "title"));
@@ -54,7 +54,7 @@ public class PseudoDatabase {
      * @param booksInput are the books to be present on database start
      * @param discsInput are the discs to be present on database start
      */
-    public PseudoDatabase(final Set<Book> booksInput,
+    public PseudoDatabase(final Set<User> booksInput,
             final Set<Disc> discsInput) {
         this.books = booksInput;
         this.discs = discsInput;
@@ -67,7 +67,7 @@ public class PseudoDatabase {
      *
      * @return all books
      */
-    public final Set<Book> getBooks() {
+    public final Set<User> getBooks() {
         return books;
     }
 

@@ -54,7 +54,7 @@ public class MediaService implements Service {
     //Methods Public
     //--------------------------------------------------------------------------
     @Override
-    public final Result addBook(final Book toAdd) {
+    public final Result addBook(final User toAdd) {
         final int code;
         final String message;
         if (toAdd == null
@@ -130,7 +130,7 @@ public class MediaService implements Service {
     }
 
     @Override
-    public final Result updateBook(final Book toUpdate) {
+    public final Result updateBook(final User toUpdate) {
         final int code;
         final String message;
         if (toUpdate == null
@@ -185,7 +185,7 @@ public class MediaService implements Service {
                     + " The isbn-number must not be null or empty!";
         } else {
             code = OK_CODE;
-            final Book book = getDao().getBook(isbn);
+            final User book = getDao().getBook(isbn);
             if (book != null) {
                 resources.add(book);
                 message = OK_MESSAGE + " The book with isbn-number "
