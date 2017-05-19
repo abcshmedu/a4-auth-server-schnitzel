@@ -7,8 +7,6 @@
  */
 package edu.hm.cs.schnitzel.auth.entities;
 
-import java.util.Objects;
-
 /**
  * Represents Books. This class will be able to be parsed from + to json.
  *

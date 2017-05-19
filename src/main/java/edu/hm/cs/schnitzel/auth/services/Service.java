@@ -7,7 +7,7 @@
  */
 package edu.hm.cs.schnitzel.auth.services;
 
-import edu.hm.cs.schnitzel.auth.requesthandler.ServiceResult;
+import edu.hm.cs.schnitzel.auth.result.Result;
 
 /**
  *
@@ -15,8 +15,8 @@ import edu.hm.cs.schnitzel.auth.requesthandler.ServiceResult;
  */
 public interface Service {
     
-    ServiceResult validateToken(final String token);
+    Result validateToken(final String token);
     
-    ServiceResult requestToken(final String username, final String password);
+    Result requestToken(final String username, final String password);
     
 }
