@@ -7,76 +7,76 @@
  */
 package edu.hm.cs.schnitzel.auth.database;
 
+import edu.hm.cs.schnitzel.auth.entities.User;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-
-import edu.hm.cs.schnitzel.entities.Book;
-import edu.hm.cs.schnitzel.entities.Disc;
+import java.util.TreeMap;
 
 /**
- *
- * @author konopac
+ * A pseudo database for storing tokens and users + passwords.
  */
 public class PseudoDatabase {
 
-    // Object Variables
-    // -------------------------------------------------------------------------
-    private final Set<User> books;
-    private final Set<Disc> discs;
-
-    // Constructors
-    // -------------------------------------------------------------------------
+    //Object Variables
     /**
-     * Use default filled database.
+     * Set for all Users.
+     */
+    private final Set<User> users;
+    /**
+     * Set for all currently active tokens.
+     */
+    private final Set<String> tokens;
+    /**
+     * Maps users to tokens.
+     */
+    private final Map<String, User> tokenUserMap;
+
+    //Constructors
+    /**
+     * Creates a empty Database.
      */
     public PseudoDatabase() {
-        books = new HashSet<>();
-        discs = new HashSet<>();
-
-        books.add(new User("Tolkien", "12345-321",
-                2, "The Lord of the Rings 1"));
-        books.add(new User("Tolkien", "12345-322",
-                1, "The Lord of the Rings 2"));
-        books.add(new User("Tolkien", "12345-323",
-                1, "The Lord of the Rings 3"));
-        books.add(new User("Rowling", "99999-123",
-                0, "Harry Potter"));
-
-        discs.add(new Disc("9123-1234", 0, 2, "nicfel", "flip", "title"));
-        discs.add(new Disc("2342-3043", 1, 1, "affe", "kuh", "schnitzel"));
-        discs.add(new Disc("8723-4823", 2, 0,
-                "Peter Jackson", "...", "The Lord of the Rings"));
+        this(new HashSet<User>(), new HashSet<String>());
     }
 
     /**
-     * Fill your own database.
+     * Creates a database pre initialized with the given collections.
      *
-     * @param booksInput are the books to be present on database start
-     * @param discsInput are the discs to be present on database start
+     * @param users The list for all users.
+     * @param tokens The currently active tokens.
      */
-    public PseudoDatabase(final Set<User> booksInput,
-            final Set<Disc> discsInput) {
-        this.books = booksInput;
-        this.discs = discsInput;
+    public PseudoDatabase(Set<User> users, Set<String> tokens) {
+        this.users = users;
+        this.tokens = tokens;
+        this.tokenUserMap = new TreeMap<>();
     }
 
-    // Public Getter
-    // -------------------------------------------------------------------------
+    //Getter
     /**
-     * Get Books.
+     * Simple getter for userset.
      *
-     * @return all books
+     * @return The set.
      */
-    public final Set<User> getBooks() {
-        return books;
+    public final Set<User> getUsers() {
+        return users;
     }
 
     /**
-     * Get Discs.
+     * Simple getter for tokenset.
      *
-     * @return all discs
+     * @return The set.
      */
-    public final Set<Disc> getDiscs() {
-        return discs;
+    public final Set<String> getTokens() {
+        return tokens;
     }
+    
+    /**
+     * Simple getter for tokenUserMap.
+     * @return The map.
+     */
+    public final Map<String, User> getTokenUserMap() {
+        return tokenUserMap;
+    }
+
 }

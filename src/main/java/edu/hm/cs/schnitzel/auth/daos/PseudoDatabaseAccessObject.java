@@ -8,10 +8,8 @@
 package edu.hm.cs.schnitzel.auth.daos;
 
 import edu.hm.cs.schnitzel.auth.database.PseudoDatabase;
+import edu.hm.cs.schnitzel.auth.entities.Role;
 import edu.hm.cs.schnitzel.auth.entities.User;
-import java.util.ArrayList;
-import java.util.List;
-
 import java.util.HashSet;
 
 /**
@@ -25,102 +23,60 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
 
     //Constant Variables
     //--------------------------------------------------------------------------
+    /**
+     * The database.
+     */
     private static final PseudoDatabase DATABASE
-            = new PseudoDatabase(new HashSet<User>(), new HashSet<>());
+            = new PseudoDatabase(new HashSet<>(), new HashSet<>());
 
-    //Methods Public Static
-    //--------------------------------------------------------------------------
+    //Constructor
     /**
-     * Clear the database. Mostly used for testing
+     * Default C-Tor.
      */
-    public static final void clear() {
-        DATABASE.getBooks().clear();
-        DATABASE.getDiscs().clear();
-    }
-
-    //Methods Private
-    //--------------------------------------------------------------------------
-    /**
-     * Remove a book.
-     *
-     * @param isbn is the isbn number of the book to remove
-     * @return true
-     */
-    private boolean removeBook(final String isbn) {
-        DATABASE.getBooks().remove(getBook(isbn));
-        return true;
-    }
-
-    /**
-     * Remove a disc.
-     *
-     * @param barcode is the barcode of the disc to remove
-     * @return true
-     */
-    private boolean removeDisc(final String barcode) {
-        DATABASE.getDiscs().remove(getDisc(barcode));
-        return true;
-    }
-
-    //Methods Public
-    //--------------------------------------------------------------------------
-    @Override
-    public final boolean addBook(final User toAdd) {
-        return DATABASE.getBooks().add(toAdd);
+    public PseudoDatabaseAccessObject() {
     }
 
     @Override
-    public final boolean addDisc(final Disc toAdd) {
-        return DATABASE.getDiscs().add(toAdd);
+    public boolean userExists(User user) {
+        //stream users and return true if a match was found
+        return DATABASE.getUsers().stream()
+                .anyMatch(currentUser -> user.equals(currentUser));
     }
 
     @Override
-    public final List<User> getBooks() {
-        final List<User> result = new ArrayList<>();
-        result.addAll(DATABASE.getBooks());
-        return result;
+    public boolean tokenIsValid(String token) {
+        //stream users and return true if a match was found
+        return DATABASE.getTokens().stream()
+                .anyMatch(currentToken -> currentToken.equals(token));
     }
 
     @Override
-    public final List<Disc> getDiscs() {
-        final List<Disc> result = new ArrayList<>();
-        result.addAll(DATABASE.getDiscs());
-        return result;
+    public final boolean removeToken(String token) {
+        return DATABASE.getTokens().remove(token);
     }
 
     @Override
-    public final boolean updateBook(final User toUpdate) {
-        final boolean removed = removeBook(toUpdate.getIsbn());
-        final boolean added = addBook(toUpdate);
-        return removed && added;
-    }
-
-    @Override
-    public final boolean updateDisc(final Disc toUpdate) {
-        final boolean removed = removeDisc(toUpdate.getBarcode());
-        final boolean added = addDisc(toUpdate);
-        return removed && added;
-    }
-
-    @Override
-    public final User getBook(final String isbn) {
-        User result = null;
-        for (final User book : DATABASE.getBooks()) {
-            if (book.getIsbn().equals(isbn)) {
-                result = book;
-            }
+    public final boolean addToken(User user, String token) {
+        final boolean result = DATABASE.getTokens().add(token);
+        if (result) {
+            DATABASE.getTokenUserMap().put(token, user);
         }
+        /* Code for expiration Time 10 minutes
+        if(result) {
+            new Timer(token, true).schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    DATABASE.getTokens().remove(token);
+                    DATABASE.getTokenUserMap().remove(token);
+                }
+            }, 600000);
+        }*/
         return result;
     }
 
     @Override
-    public final Disc getDisc(final String barcode) {
-        Disc result = null;
-        for (final Disc disc : DATABASE.getDiscs()) {
-            if (disc.getBarcode().equals(barcode)) {
-                result = disc;
-            }
-        }
-        return result;
+    public final Role getRole(String token) {
+        return DATABASE.getTokenUserMap().get(token).getRole();
     }
+
 }

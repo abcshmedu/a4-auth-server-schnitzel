@@ -7,8 +7,8 @@
  */
 package edu.hm.cs.schnitzel.auth.daos;
 
+import edu.hm.cs.schnitzel.auth.entities.Role;
 import edu.hm.cs.schnitzel.auth.entities.User;
-import java.util.List;
 
 /**
  *
@@ -17,82 +17,44 @@ import java.util.List;
 public interface DatabaseAccessObject {
 
     /**
-     * Add a book.
+     * Check if the provided User exists.
      *
-     * DAO method to add a single book
-     *
-     * @param toAdd is the book to be added
-     * @return true, if the process was successful.
+     * @param user The provided user.
+     * @return True: User exists; False: User doesn't exist.
      */
-    boolean addBook(final User toAdd);
+    boolean userExists(User user);
 
     /**
-     * Add a disc.
+     * Check if the provided token is valid.
      *
-     * DAO method to add a single disc
-     *
-     * @param toAdd is the disc to be added
-     * @return true, if the process was successful.
+     * @param token The provided token.
+     * @return True: Token is valid; False: Token is not valid.
      */
-    boolean addDisc(final Disc toAdd);
+    boolean tokenIsValid(String token);
 
     /**
-     * Get all books.
+     * Removes token from the database.
      *
-     * DAO method to get all books
-     *
-     * @return all books
+     * @param token The token to be removed.
+     * @return Success: true; No success: false.
      */
-    List<User> getBooks();
+    boolean removeToken(String token);
 
     /**
-     * Get all discs.
+     * Adds token to database.
      *
-     * DAO method to get all discs
-     *
-     * @return all discs
+     * @param user The user which the token is connected to.
+     * @param token The token to be added.
+     * @return Success: true; No success: false (token was already in database).
      */
-    List<Disc> getDiscs();
+    boolean addToken(User user, String token);
 
     /**
-     * Get a book.
+     * Check role of token.
      *
-     * DAO method to get a single book
-     *
-     * @param isbn is the isbn number of the wanted book
-     * @return the wanted book
+     * @param token The token to be checked.
+     * @return The role of the token.
      */
-    User getBook(final String isbn);
-
-    /**
-     * Get a disc.
-     *
-     * DAO method to get a single disc
-     *
-     * @param barcode is the barcode of the wanted disc
-     * @return the wanted disc
-     */
-    Disc getDisc(final String barcode);
-
-    /**
-     * Update a book.
-     *
-     * DAO method to update a single book (changing the isbn number is not
-     * allowed)
-     *
-     * @param toUpdate is the updated book
-     * @return true, if the process was successful.
-     */
-    boolean updateBook(final User toUpdate);
-
-    /**
-     * Update a disc.
-     *
-     * DAO method to update a single disc (changing the barcode is not allowed)
-     *
-     * @param toUpdate is the updated disc
-     * @return true, if the process was successful.
-     */
-    boolean updateDisc(final Disc toUpdate);
+    Role getRole(String token);
 
 }

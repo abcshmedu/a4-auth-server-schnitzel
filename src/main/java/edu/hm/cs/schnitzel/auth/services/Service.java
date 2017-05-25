@@ -7,6 +7,7 @@
  */
 package edu.hm.cs.schnitzel.auth.services;
 
+import edu.hm.cs.schnitzel.auth.entities.User;
 import edu.hm.cs.schnitzel.auth.result.Result;
 
 /**
@@ -14,9 +15,19 @@ import edu.hm.cs.schnitzel.auth.result.Result;
  * @author nicfel
  */
 public interface Service {
-    
+
+    /**
+     * Validate the specified token.
+     * @param token The specified token.
+     * @return A result which can be processed by the requestHandler.
+     */
     Result validateToken(final String token);
-    
-    Result requestToken(final String username, final String password);
-    
+
+    /**
+     * Request token for the specified user.
+     * @param user The specified user.
+     * @return A result which can be processed by the requestHandler.
+     */
+    Result requestToken(User user);
+
 }
