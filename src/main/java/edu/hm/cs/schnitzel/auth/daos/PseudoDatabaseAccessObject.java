@@ -29,6 +29,17 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
     private static final PseudoDatabase DATABASE
             = new PseudoDatabase(new HashSet<>(), new HashSet<>());
 
+    //Methods Public Static
+    //--------------------------------------------------------------------------
+    /**
+     * Clear the database. Mostly used for testing
+     */
+    public static final void clear() {
+        DATABASE.getUsers().clear();
+        DATABASE.getTokens().clear();
+        DATABASE.getTokenUserMap().clear();
+    }
+    
     //Constructor
     /**
      * Default C-Tor.
