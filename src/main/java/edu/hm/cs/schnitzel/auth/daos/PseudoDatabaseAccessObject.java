@@ -11,6 +11,7 @@ import edu.hm.cs.schnitzel.auth.database.PseudoDatabase;
 import edu.hm.cs.schnitzel.auth.entities.Role;
 import edu.hm.cs.schnitzel.auth.entities.User;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * PseudoDatabaseAccessObject.
@@ -23,11 +24,22 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
 
     //Constant Variables
     //--------------------------------------------------------------------------
+	/**
+	 * Static Method to prefill the database with user.
+	 * (Needed for testing)
+	 * 
+	 * @return a Set of users
+	 */
+	private static Set<User> createUsers() {
+		final Set<User> users = new HashSet<>();
+		users.add(new User("Max", "password"));
+		return users;
+	}
     /**
      * The database.
      */
     private static final PseudoDatabase DATABASE
-            = new PseudoDatabase(new HashSet<>(), new HashSet<>());
+            = new PseudoDatabase(createUsers(), new HashSet<>());
 
     //Methods Public Static
     //--------------------------------------------------------------------------
