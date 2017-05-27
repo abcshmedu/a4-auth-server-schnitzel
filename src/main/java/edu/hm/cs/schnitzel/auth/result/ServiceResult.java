@@ -27,15 +27,6 @@ public class ServiceResult implements Result {
 
 	// Constructors
 
-    /**
-     * Empty Constructor.
-     * 
-     * Creates a not filled object of ServiceResult
-     */
-	public ServiceResult() {
-		this(0, "");
-	}
-
 	/**
 	 * Detailed Constructor.
 	 * 

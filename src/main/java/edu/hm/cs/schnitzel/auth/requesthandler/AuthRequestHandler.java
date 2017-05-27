@@ -40,27 +40,28 @@ public class AuthRequestHandler {
      *
      * Accepts token as JSON
      *
-     * @param token is the token to be validated
+     * @param input is the token to be validated
      * @return the response with code, message and content
      */
     @POST
     @Path("/token")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response validateToken(final String token) {
+    public Response validateToken(final String input) {
         System.out.println("Hello im working as intended");
+        final JSONObject json = new JSONObject(input);
+        final String token = (String) json.get("token");
         // Call service method and wait for result
         final Result result = getService().validateToken(token);
         // Build JSON-Content
         final JSONObject content = new JSONObject()
-                .put("valid", result.getContent().isValid())
-                .put("role", result.getContent().getUserRole());
+                .put("valid", result.getContent().isValid());
         // Build JSON-Result
-        final JSONObject json = new JSONObject()
+        final JSONObject jsonResult = new JSONObject()
                 .put("code", result.getCode())
                 .put("message", result.getMessage())
                 .put("content", content);
-        return Response.status(Response.Status.ACCEPTED).entity(json).build();
+        return Response.status(Response.Status.ACCEPTED).entity(jsonResult.toString()).build();
     }
 
     /**
@@ -87,7 +88,7 @@ public class AuthRequestHandler {
                 .put("code", result.getCode())
                 .put("message", result.getMessage())
                 .put("content", content);
-        return Response.status(Response.Status.ACCEPTED).entity(json).build();
+        return Response.status(Response.Status.ACCEPTED).entity(json.toString()).build();
     }
 
     // Getter and Setter

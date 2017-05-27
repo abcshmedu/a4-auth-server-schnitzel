@@ -50,6 +50,7 @@ public class PseudoDatabaseAccessObject implements DatabaseAccessObject {
         DATABASE.getUsers().clear();
         DATABASE.getTokens().clear();
         DATABASE.getTokenUserMap().clear();
+        DATABASE.getUsers().add(new User("Max", "password"));
     }
     
     //Constructor

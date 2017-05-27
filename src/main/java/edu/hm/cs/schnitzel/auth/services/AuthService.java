@@ -63,6 +63,7 @@ public class AuthService implements Service {
             for (int i = 0; i < 25; i++) {
                 token = token + (char)(random.nextInt(26) + 'a');
             }
+            dao.addToken(user, token);
             //CHECKSTYLE:ON
             result.setToken(token);
         } else {

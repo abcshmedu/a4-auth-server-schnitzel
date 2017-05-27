@@ -70,17 +70,6 @@ public class User {
     	this(nameInput, passwordInput, Role.user);
     }
     
-    /**
-     * Copy Constructor.
-     * 
-     * Creates a deep copy of the given object
-     * 
-     * @param original is the original user to copy
-     */
-    public User(final User original) {
-    	this(new String(original.getName()), new String(original.getPassword()), original.getRole());
-    }
-
     // Public Methods
 
     @Override

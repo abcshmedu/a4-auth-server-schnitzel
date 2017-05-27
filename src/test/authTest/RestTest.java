@@ -66,10 +66,14 @@ public class RestTest {
     
     @Test
     public void filledDatabaseRequestToken() throws IOException {
+    	// define filler for random token for testing
+    	final String filler = "<random>";
         // specify expected
-        final String expected = "{\"code\": 200, \"message\": \"OK\", \"content\": {\"token\": \"abc\", \"role\": \"user\"}}";
+        final String expected = "{\"code\":200,\"message\":\"OK\",\"content\":{\"token\":\"" + filler + "\"}}";
         // send request and receive answer
-        final String got = sendAndReceive("GET", "", "{\"username\": \"Max\", \"password\": \"password\"}");
+        final String receive = sendAndReceive("POST", "", "{\"name\": \"Max\", \"password\": \"password\"}");
+        // replace random token with filler
+        final String got = receive.replaceAll("\"token\":\"[a-z]+\"","\"token\":\"" + filler + "\"");
         // assert equals
         assertEquals(expected, got);
     }
@@ -77,9 +81,9 @@ public class RestTest {
     @Test
     public void filledDatabaseRequestTokenWrongPassword() throws IOException {
     	// specify expected
-    	final String expected = "{\"code\": 400, \"message\": \"Wrong Password\", \"content\": {}}";
+    	final String expected = "{\"code\":404,\"message\":\"The user does not exist. Please check spelling\",\"content\":{\"token\":\"\"}}";
     	// send request and receive answer
-    	final String got = sendAndReceive("GET", "", "{\"username\": \"Max\", \"password\": \"wrongPassword\"}");
+    	final String got = sendAndReceive("POST", "", "{\"name\": \"Max\", \"password\": \"wrongPassword\"}");
     	// assert equals
     	assertEquals(expected, got);
     }
@@ -87,9 +91,22 @@ public class RestTest {
     @Test
     public void filledDatabaseValidateToken() throws IOException {
     	// specify expected
-    	final String expected = "{\"code\": 200, \"message\": \"OK\", \"content\": {\"valid\": \"true\", \"role\": \"user\"}}";
+    	final String expected = "{\"code\":200,\"message\":\"OK\",\"content\":{\"valid\":true}}";
+    	// send request and receive token
+        final String receive = sendAndReceive("POST", "", "{\"name\": \"Max\", \"password\": \"password\"}");
+        final String token = receive.substring(47, 47+25);
     	// send request and receive answer
-    	final String got = sendAndReceive("GET", "token", "{\"token\": \"abc\"}");
+    	final String got = sendAndReceive("POST", "token", "{\"token\": \"" + token + "\"}");
+    	// assert equals
+    	assertEquals(expected, got);
+    }
+
+    @Test
+    public void filledDatabaseValidateTokenNotFound() throws IOException {
+    	// specify expected
+    	final String expected = "{\"code\":404,\"message\":\"Your token does not exist.\",\"content\":{\"valid\":false}}";
+    	// send request and receive answer
+    	final String got = sendAndReceive("POST", "token", "{\"token\": \"abc\"}");
     	// assert equals
     	assertEquals(expected, got);
     }
@@ -121,12 +138,14 @@ public class RestTest {
     }
 
     private void sendHttpHeader(PrintWriter writer, String method, String token, int contentLength) {
-        writer.print(method + " /auth/" + token + " HTTP/1.0\r\n");
-        System.out.print("\t" + method + " /auth" + token + " HTTP/1.0\r\n");
+        writer.print(method + " /shareit/auth/" + token + " HTTP/1.0\r\n");
+        System.out.print("\t" + method + " /shareit/auth/" + token + " HTTP/1.0\r\n");
         writer.print("Host: localhost\r\n");
         System.out.print("\t" + "Host: localhost\r\n");
         writer.print("Content-Type: application/json\r\n");
         System.out.print("\t" + "Content-Type: application/json\r\n");
+        writer.print("Accept: application/json\r\n");
+        System.out.print("\t" + "Accept: application/json\r\n");
         writer.print("Content-Length: " + contentLength + "\r\n");
         System.out.print("\t" + "Content-Length: " + contentLength + "\r\n");
         writer.print("\r\n");
