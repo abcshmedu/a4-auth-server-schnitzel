@@ -48,6 +48,7 @@ public class AuthRequestHandler {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response validateToken(final String token) {
+        System.out.println("Hello im working as intended");
         // Call service method and wait for result
         final Result result = getService().validateToken(token);
         // Build JSON-Content
