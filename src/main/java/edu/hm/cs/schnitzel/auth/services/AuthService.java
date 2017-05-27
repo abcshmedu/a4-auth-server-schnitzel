@@ -61,7 +61,7 @@ public class AuthService implements Service {
             final Random random = new Random();
             //CHECKSTYLE:OFF
             for (int i = 0; i < 25; i++) {
-                token = token + random.nextInt(26) + 'a';
+                token = token + (char)(random.nextInt(26) + 'a');
             }
             //CHECKSTYLE:ON
             result.setToken(token);
